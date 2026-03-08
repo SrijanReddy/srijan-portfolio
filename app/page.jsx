@@ -1,5 +1,4 @@
-'use client'
-
+"use client";
 import { useState, useEffect, useRef } from "react";
 
 const data = {
@@ -258,18 +257,12 @@ export default function Portfolio() {
 
   const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!formState.name || !formState.email) return;
     setSending(true);
-    await fetch("https://formspree.io/f/mlgwvanb", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formState),
-    });
-    setSending(false);
-    setSent(true);
-};
-        
+    setTimeout(() => { setSending(false); setSent(true); }, 1200);
+  };
+
   const expRef = useReveal();
   const skillsRef = useReveal();
   const contactRef = useReveal();
@@ -293,6 +286,7 @@ export default function Portfolio() {
           {["about", "experience", "skills", "contact"].map(s => (
             <span key={s} className={`nav-link ${activeSection === s ? "active" : ""}`} onClick={() => scrollTo(s)}>{s}</span>
           ))}
+          <a href="/projects" className="nav-link" style={{ textDecoration: "none" }}>projects</a>
         </div>
       </nav>
 
