@@ -26,11 +26,8 @@ const css = `
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     padding: 0 48px; height: 60px;
     display: flex; align-items: center; justify-content: space-between;
-    background: rgba(8,8,8,0.88); backdrop-filter: blur(16px);
-    transition: border-bottom 0.4s;
+    background: rgba(8,8,8,0.88); backdrop-filter: blur(16px); border-bottom: 1px solid #1f1f1f;
   }
-  .nav.scrolled { border-bottom: 1px solid #1f1f1f; }
-
   .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; color: #f0ede6; letter-spacing: -0.02em; text-decoration: none; }
   .nav-links { display: flex; gap: 32px; }
   .nav-link { font-family: 'DM Mono', monospace; font-size: 11px; color: #7a7a78; text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; cursor: none; transition: color 0.2s; position: relative; padding-bottom: 4px; }
@@ -171,6 +168,7 @@ const css = `
   @keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
   @keyframes progress-fill { 0% { width: 15%; } 100% { width: 85%; } }
   @keyframes score-draw { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 22; } }
+  @keyframes pulse-btn { 0%,100% { box-shadow: 0 0 0 0 rgba(200,240,96,0.4); } 50% { box-shadow: 0 0 0 4px rgba(200,240,96,0); } }
   @keyframes color-cycle {
     0%   { color: #a855f7; }
     25%  { color: #f97316; }
@@ -365,6 +363,140 @@ function ResumeMatchMock() {
   );
 }
 
+// ── ProfileUnhider Mock ──────────────────────────────────────────
+const REDDIT_POSTS = [
+  { title: "Found this hiking trail in WA", sub: "r/Seattle", votes: "1.2k" },
+  { title: "My ESP32 project after 3 months", sub: "r/arduino", votes: "847" },
+  { title: "Tips for system design interviews", sub: "r/cscareerquestions", votes: "3.4k" },
+];
+const REDDIT_COMMENTS = [
+  { text: "This is exactly what I needed, thanks!", sub: "r/webdev" },
+  { text: "Great point — the async approach works better here", sub: "r/programming" },
+];
+function ProfileUnhiderMock() {
+  const [phase, setPhase] = useState("hidden"); // hidden → revealing → revealed
+  const [visiblePosts, setVisiblePosts] = useState([]);
+  const [visibleComments, setVisibleComments] = useState([]);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const cycle = () => {
+      setPhase("hidden");
+      setVisiblePosts([]);
+      setVisibleComments([]);
+      setCount(0);
+      // pause on hidden state
+      setTimeout(() => {
+        setPhase("revealing");
+        // stagger posts in
+        REDDIT_POSTS.forEach((_, i) => {
+          setTimeout(() => {
+            setVisiblePosts(p => [...p, i]);
+            setCount(c => c + 1);
+          }, 600 + i * 500);
+        });
+        // stagger comments in after posts
+        REDDIT_COMMENTS.forEach((_, i) => {
+          setTimeout(() => {
+            setVisibleComments(p => [...p, i]);
+            setCount(c => c + 1);
+          }, 600 + REDDIT_POSTS.length * 500 + i * 400);
+        });
+        // final revealed state
+        setTimeout(() => setPhase("revealed"), 600 + (REDDIT_POSTS.length + REDDIT_COMMENTS.length) * 500);
+      }, 1200);
+    };
+    cycle();
+    const interval = setInterval(cycle, 8000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="browser-frame" style={{ width: 210, height: 240 }}>
+      <div className="browser-bar">
+        <div className="browser-dot" style={{ background: "#ff5f57" }} />
+        <div className="browser-dot" style={{ background: "#ffbd2e" }} />
+        <div className="browser-dot" style={{ background: "#28c840" }} />
+        <div className="browser-url" />
+      </div>
+      <div style={{ flex: 1, background: "#f6f7f8", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+        {/* Reddit profile header */}
+        <div style={{ background: "#fff", borderBottom: "1px solid #edeff1", padding: "8px 10px", display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+          <div style={{ width: 24, height: 24, borderRadius: "50%", background: phase === "hidden" ? "#edeff1" : "#ff4500", flexShrink: 0, transition: "background 0.4s", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10 }}>
+            {phase !== "hidden" && "👤"}
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 8, fontWeight: 700, color: phase === "hidden" ? "#edeff1" : "#1c1c1c", background: phase === "hidden" ? "#edeff1" : "transparent", borderRadius: 2, transition: "all 0.4s" }}>
+              {phase === "hidden" ? "██████████" : "u/srijanreddy"}
+            </div>
+            <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 6, color: "#878a8c", marginTop: 1 }}>
+              {phase === "hidden" ? "Profile hidden" : `${count} items found`}
+            </div>
+          </div>
+          {/* Injected Reveal button */}
+          {phase === "hidden" && (
+            <div style={{ background: "#c8f060", color: "#080808", fontFamily: "'Syne', sans-serif", fontSize: 6, fontWeight: 700, padding: "3px 6px", borderRadius: 2, letterSpacing: "0.05em", animation: "pulse-btn 1.5s ease-in-out infinite" }}>
+              Reveal →
+            </div>
+          )}
+          {phase !== "hidden" && (
+            <div style={{ background: "rgba(200,240,96,0.15)", border: "1px solid rgba(200,240,96,0.4)", color: "#c8f060", fontFamily: "'DM Mono', monospace", fontSize: 6, padding: "2px 5px", borderRadius: 2 }}>
+              ✓ Found
+            </div>
+          )}
+        </div>
+
+        {/* Content area */}
+        <div style={{ flex: 1, overflow: "hidden", padding: "6px 8px", display: "flex", flexDirection: "column", gap: 4 }}>
+          {phase === "hidden" && (
+            <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 4 }}>
+              <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 7, color: "#878a8c", textAlign: "center", lineHeight: 1.6 }}>
+                🔒 This profile is hidden<br />
+                <span style={{ color: "#c8f060", fontSize: 6 }}>Click Reveal to surface activity</span>
+              </div>
+            </div>
+          )}
+          {phase !== "hidden" && (
+            <>
+              {visiblePosts.length > 0 && (
+                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 6, color: "#878a8c", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 2 }}>Posts</div>
+              )}
+              {REDDIT_POSTS.map((post, i) => (
+                <div key={i} style={{
+                  background: "#fff", border: "1px solid #edeff1", borderRadius: 2, padding: "4px 6px",
+                  opacity: visiblePosts.includes(i) ? 1 : 0,
+                  transform: visiblePosts.includes(i) ? "translateY(0)" : "translateY(4px)",
+                  transition: "opacity 0.3s, transform 0.3s",
+                }}>
+                  <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 7, fontWeight: 600, color: "#1c1c1c", lineHeight: 1.3 }}>{post.title}</div>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginTop: 2 }}>
+                    <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 6, color: "#ff4500" }}>{post.sub}</div>
+                    <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 6, color: "#878a8c" }}>▲ {post.votes}</div>
+                  </div>
+                </div>
+              ))}
+              {visibleComments.length > 0 && (
+                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 6, color: "#878a8c", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: 2, marginBottom: 2 }}>Comments</div>
+              )}
+              {REDDIT_COMMENTS.map((comment, i) => (
+                <div key={i} style={{
+                  background: "#fff", border: "1px solid #edeff1", borderLeft: "2px solid #c8f060", borderRadius: 2, padding: "4px 6px",
+                  opacity: visibleComments.includes(i) ? 1 : 0,
+                  transform: visibleComments.includes(i) ? "translateY(0)" : "translateY(4px)",
+                  transition: "opacity 0.3s, transform 0.3s",
+                }}>
+                  <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 6.5, color: "#1c1c1c", lineHeight: 1.4 }}>{comment.text}</div>
+                  <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 6, color: "#ff4500", marginTop: 2 }}>{comment.sub}</div>
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Icons ──────────────────────────────────────────
 const IconGithub = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -385,9 +517,31 @@ const IconLinkedIn = () => (
 
 // ── Projects data ──────────────────────────────────────────
 const projects = [
-    {
-    id: "resumematch",
+  {
+    id: "profileunhider",
     number: "01",
+    title: "Profile Unhider",
+    tagline: "A Chrome extension that surfaces hidden Reddit profile activity",
+    status: "live",
+    statusLabel: "Live on Chrome Web Store",
+    description: "A Chrome extension that detects hidden Reddit profiles and reveals their publicly indexed posts and comments. The trickiest engineering challenge was that Reddit's search API strips comment IDs from permalinks for hidden profiles — solved by fetching each thread and recursively walking the comment tree to find the author's comment. All data sourced exclusively from Reddit's public search index.",
+    bullets: [
+      "Recursive comment-tree search across parallel thread fetches — Reddit strips comment IDs for hidden profiles so each thread is fetched and walked to find the author's t1 comment",
+      "25 parallel Promise.all hydrations for comment body fetching with per-card DOM updates as each resolves",
+      "SPA-aware MutationObserver detects Reddit's client-side navigation and re-runs detection on profile changes",
+      "Chrome MV3 content script with zero permissions beyond reddit.com — no background service worker needed",
+      "Auto-detects hidden profiles via DOM text matching, injects Reveal button and full panel without page reload",
+      "Published to Chrome Web Store with landing page, privacy policy, and store screenshots",
+    ],
+    tags: ["JavaScript", "Chrome MV3", "Reddit Indexing", "Content Scripts", "CSS", "Netlify"],
+    heroTags: ["Chrome MV3", "Reddit Indexing", "JavaScript"],
+    github: "https://github.com/srijanreddy",
+    demo: "https://profile-unhider.netlify.app",
+    Mock: ProfileUnhiderMock,
+  },
+  {
+    id: "resumematch",
+    number: "02",
     title: "ResumeMatch AI",
     tagline: "Chrome extension that scores & tailors your resume against any job posting",
     status: "wip",
@@ -406,10 +560,10 @@ const projects = [
     github: null,
     demo: "https://srijanreddy.vercel.app",
     Mock: ResumeMatchMock,
-},
+  },
   {
     id: "sixseven",
-    number: "02",
+    number: "03",
     title: "Six Seven",
     tagline: "A tap counter app with milestone awards & spring animations",
     status: "live",
@@ -431,7 +585,7 @@ const projects = [
   },
   {
     id: "inkplate",
-    number: "03",
+    number: "04",
     title: "E-ink Dashboard",
     tagline: "A standalone hardware dashboard with weather, Spotify & stoic quotes",
     status: "live",
@@ -473,13 +627,6 @@ export default function Projects() {
   const cursorRef = useRef();
   const ringRef = useRef();
   const cardRefs = useCardReveal(projects.length);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);  
 
   useEffect(() => {
     const move = (e) => {
@@ -504,14 +651,14 @@ export default function Projects() {
       <div className="cursor-ring" ref={ringRef} />
 
       {/* NAV */}
-      <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
+      <nav className="nav">
         <Link href="/" className="nav-logo">SR</Link>
         <div className="nav-links">
           <Link href="/" className="nav-link">About</Link>
           <Link href="/#experience" className="nav-link">Experience</Link>
+          <span className="nav-link active">Projects</span>
           <Link href="/#skills" className="nav-link">Skills</Link>
           <Link href="/#contact" className="nav-link">Contact</Link>
-          <span className="nav-link active">Projects</span>
         </div>
       </nav>
 
