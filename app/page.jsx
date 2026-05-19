@@ -7,8 +7,22 @@ const data = {
   location: "Seattle, WA",
   email: "srijanreddy309@gmail.com",
   linkedin: "https://www.linkedin.com/in/srijanreddy/",
-  summary: "3+ years building high-availability, large-scale systems at Amazon. Full-stack engineer with deep expertise in Java, distributed systems, cloud infrastructure, and DevOps. Passionate about writing clean, scalable code that ships fast.",
+  summary: "Software Engineer with 4+ years of experience building and scaling high-availability distributed systems at Amazon and GEICO. Strong expertise in Java, Node.js, .NET, and cloud platforms (AWS, Azure), with a focus on microservices, API design, and system reliability. Proven track record of improving performance, reducing latency, and delivering impactful customer-facing features in large-scale production systems.",
   experience: [
+    {
+      role: "Engineer II",
+      company: "GEICO",
+      location: "Chevy Chase, MD (Remote)",
+      period: "Apr 2026 — Present",
+      bullets: [
+        "Maintaining and enhancing enterprise-scale insurance applications using .NET, Azure, Flutter, and Dart",
+        "Resolved high-severity production incidents and improved system stability across insurance data services",
+        "Developed batch-processing workflows for insurance data pipelines, improving backend processing efficiency",
+        "Built and enhanced Flutter-based UI features for commercial insurance applications, improving usability and user experience",
+        "Integrated REST APIs across internal systems to improve data flow and service interoperability",
+      ],
+      tags: [".NET", "Azure", "Flutter", "Dart", "REST APIs", "Microservices"],
+    },
     {
       role: "Software Development Engineer",
       company: "Amazon",
