@@ -95,7 +95,6 @@ const css = `
     transition: background 0.4s, border-bottom 0.4s;
   }
   .nav.scrolled { background: rgba(8,8,8,0.88); backdrop-filter: blur(16px); border-bottom: 1px solid #1f1f1f; }
-  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; color: #f0ede6; letter-spacing: -0.02em; }
   .nav-links { display: flex; gap: 32px; }
   .nav-link { font-family: 'DM Mono', monospace; font-size: 11px; color: #7a7a78; text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; cursor: none; transition: color 0.2s; position: relative; padding-bottom: 4px; }
   .nav-link:hover { color: #c8f060; }
@@ -313,7 +312,6 @@ export default function Portfolio() {
 
       {/* NAV */}
       <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
-        <div className="nav-logo">SR</div>
         <div className="nav-links">
           {["about", "experience", "skills", "contact"].map(s => (
             <span key={s} className={`nav-link ${activeSection === s ? "active" : ""}`} onClick={() => scrollTo(s)}>{s}</span>
