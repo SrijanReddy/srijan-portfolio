@@ -39,14 +39,32 @@ const data = {
       tags: ["Java", "Node.js", "AWS", "Microservices", "CI/CD", "DynamoDB"],
     },
   ],
-  skills: [
-    { group: "Languages", items: ["Java", "Python", "Kotlin", "TypeScript", "JavaScript"] },
-    { group: "Frameworks", items: ["Spring Boot", "Spring MVC", "React Native", "Angular.js", "Node.js"] },
-    { group: "Cloud & Infra", items: ["AWS (S3, Lambda, Glue)", "Azure", "Docker", "Kubernetes", "Terraform", "CloudFormation"] },
-    { group: "Databases", items: ["MySQL", "MongoDB", "DynamoDB"] },
-    { group: "DevOps", items: ["Jenkins", "GitLab CI", "Cloud Bees", "CI/CD Pipelines"] },
-    { group: "Methodologies", items: ["Agile", "Scrum", "Kanban", "Microservices"] },
-  ],
+skills: [
+  {
+    group: "Languages",
+    items: ["Java", "Python", "Kotlin", "TypeScript", "JavaScript"]
+  },
+  {
+    group: "Backend & Systems",
+    items: ["Spring Boot", "Node.js", ".NET Core", "REST APIs", "Microservices"]
+  },
+  {
+    group: "Cloud & Infrastructure",
+    items: ["AWS (S3, Lambda, Glue)", "Azure", "Docker", "Kubernetes", "Terraform", "CloudFormation"]
+  },
+  {
+    group: "Databases",
+    items: ["MySQL", "MongoDB", "DynamoDB"]
+  },
+  {
+    group: "Frontend",
+    items: ["React Native", "Angular.js", "Flutter", "Dart", "HTML", "CSS"]
+  },
+  {
+    group: "DevOps & CI/CD",
+    items: ["Jenkins", "GitLab CI", "CI/CD Pipelines", "Grafana"]
+  }
+],
 };
 
 const css = `
