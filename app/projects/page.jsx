@@ -174,7 +174,7 @@ const css = `
           }}>
             <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 7, fontWeight: 700, color: "#1a73e8", marginBottom: 3 }}>✦ AI Overview</div>
             {[80, 95, 70].map((w, i) => (
-              <div key={i} style={{ height: 4, background: "#c5d3ff", borderRadius: 2, marginBottom: 2, width: `${w}%` }} />
+              <div key={i} style={{ height: 4, background: "#c5d3ff", borderRadius: 2, marginBottom: 2, width: w + "%" }} />
             ))}
           </div>
   
