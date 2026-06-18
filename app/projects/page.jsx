@@ -188,7 +188,7 @@ const css = `
               <div key={i} style={{
                 opacity: enabled ? 1 : 0.4,
                 transform: enabled ? "translateY(0)" : "translateY(4px)",
-                transition: `opacity 0.4s ${i * 0.1}s, transform 0.4s ${i * 0.1}s`,
+                transition: "opacity 0.4s " + (i * 0.1) + "s, transform 0.4s " + (i * 0.1) + "s",
               }}>
                 <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 6, color: "#202124", marginBottom: 1 }}>{r.title}</div>
                 <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 5.5, color: "#1a73e8" }}>{r.url}</div>
