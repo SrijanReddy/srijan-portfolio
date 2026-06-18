@@ -88,6 +88,9 @@ const css = `
   /* Mock UI panel */
   .project-mock { background: #080808; display: flex; align-items: center; justify-content: center; padding: 24px; min-height: 280px; position: relative; overflow: hidden; }
 
+  /* ── ResumeMatch Mock ── */
+  
+  
   /* ── Six Seven mock ── */
   .sixseven-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; width: 100%; }
   .phone-frame { width: 140px; height: 220px; border: 2px solid #2a2a2a; border-radius: 20px; background: #0a0a0a; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; position: relative; overflow: hidden; }
