@@ -132,90 +132,6 @@ const css = `
   .ink-progress-fill { height: 100%; background: #1a1a1a; border-radius: 1px; animation: progress-fill 4s linear infinite; }
   .ink-now-playing { font-family: 'DM Mono', monospace; font-size: 6px; color: #555; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
 
-  // ── NoAI Search Mock ──────────────────────────────────────────
-  function NoAISearchMock() {
-    const [enabled, setEnabled] = useState(true);
-    const [counter, setCounter] = useState(124);
-  
-    useEffect(() => {
-      const cycle = setInterval(() => {
-        setEnabled(e => !e);
-        setCounter(c => c + Math.floor(Math.random() * 3) + 1);
-      }, 3000);
-      return () => clearInterval(cycle);
-    }, []);
-  
-    return (
-      <div className="browser-frame" style={{ width: 210, height: 240 }}>
-        <div className="browser-bar">
-          <div className="browser-dot" style={{ background: "#ff5f57" }} />
-          <div className="browser-dot" style={{ background: "#ffbd2e" }} />
-          <div className="browser-dot" style={{ background: "#28c840" }} />
-          <div className="browser-url" />
-          {/* Toolbar badge */}
-          <div style={{ marginLeft: 4, width: 14, height: 14, borderRadius: 2, background: enabled ? "#c8f060" : "#3d3d3b", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Syne', sans-serif", fontSize: 5, fontWeight: 700, color: enabled ? "#080808" : "#7a7a78", transition: "background 0.4s, color 0.4s", flexShrink: 0 }}>
-            {enabled ? "ON" : "OFF"}
-          </div>
-        </div>
-        <div style={{ flex: 1, background: "#fff", overflow: "hidden", display: "flex", flexDirection: "column" }}>
-          {/* Google search bar */}
-          <div style={{ padding: "6px 8px", borderBottom: "1px solid #edeff1", display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
-            <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 9, fontWeight: 800, color: "#4285f4" }}>G</div>
-            <div style={{ flex: 1, height: 10, background: "#f1f3f4", borderRadius: 10 }} />
-          </div>
-  
-          {/* AI Overview block — only shown when disabled */}
-          <div style={{
-            margin: "5px 8px", background: "#f0f4ff", border: "1px solid #c5d3ff",
-            borderRadius: 3, padding: "5px 6px", overflow: "hidden",
-            maxHeight: enabled ? 0 : 52, marginTop: enabled ? 0 : 5,
-            opacity: enabled ? 0 : 1,
-            transition: "max-height 0.5s ease, opacity 0.5s, margin 0.5s",
-          }}>
-            <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 7, fontWeight: 700, color: "#1a73e8", marginBottom: 3 }}>✦ AI Overview</div>
-            {[80, 95, 70].map((w, i) => (
-              <div key={i} style={{ height: 4, background: "#c5d3ff", borderRadius: 2, marginBottom: 2, width: w + "%" }} />
-            ))}
-          </div>
-  
-          {/* Search results */}
-          <div style={{ flex: 1, padding: "4px 8px", display: "flex", flexDirection: "column", gap: 6 }}>
-            {[
-              { title: "Stack Overflow — answers", url: "stackoverflow.com", w: 85 },
-              { title: "MDN Web Docs", url: "developer.mozilla.org", w: 70 },
-              { title: "GitHub — srijanreddy", url: "github.com", w: 90 },
-            ].map((r, i) => (
-              <div key={i} style={{
-                opacity: enabled ? 1 : 0.4,
-                transform: enabled ? "translateY(0)" : "translateY(4px)",
-                transition: "opacity 0.4s " + (i * 0.1) + "s, transform 0.4s " + (i * 0.1) + "s",
-              }}>
-                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 6, color: "#202124", marginBottom: 1 }}>{r.title}</div>
-                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 5.5, color: "#1a73e8" }}>{r.url}</div>
-                <div style={{ height: 3, background: "#f1f3f4", borderRadius: 2, marginTop: 2, width: r.w + "%" }} />
-              </div>
-            ))}
-          </div>
-  
-          {/* Extension popup strip */}
-          <div style={{ borderTop: "1px solid #edeff1", padding: "5px 8px", display: "flex", alignItems: "center", justifyContent: "space-between", background: "#fafafa", flexShrink: 0 }}>
-            <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 6, color: "#878a8c" }}>{counter} redirects</div>
-            <div style={{
-              width: 24, height: 12, borderRadius: 6,
-              background: enabled ? "#c8f060" : "#3d3d3b",
-              position: "relative", transition: "background 0.4s", cursor: "pointer",
-            }}>
-              <div style={{
-                position: "absolute", top: 2, width: 8, height: 8, borderRadius: "50%", background: "#fff",
-                left: enabled ? 14 : 2, transition: "left 0.4s",
-              }} />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   /* ── ResumeMatch mock ── */
   .browser-frame { width: 200px; height: 220px; border: 1.5px solid #2a2a2a; border-radius: 6px; background: #0d0d0d; display: flex; flex-direction: column; overflow: hidden; }
   .browser-bar { height: 22px; background: #161616; border-bottom: 1px solid #1f1f1f; display: flex; align-items: center; padding: 0 8px; gap: 4px; flex-shrink: 0; }
@@ -382,6 +298,90 @@ function InklateMock() {
     </div>
   );
 }
+
+// ── NoAI Search Mock ──────────────────────────────────────────
+  function NoAISearchMock() {
+    const [enabled, setEnabled] = useState(true);
+    const [counter, setCounter] = useState(124);
+  
+    useEffect(() => {
+      const cycle = setInterval(() => {
+        setEnabled(e => !e);
+        setCounter(c => c + Math.floor(Math.random() * 3) + 1);
+      }, 3000);
+      return () => clearInterval(cycle);
+    }, []);
+  
+    return (
+      <div className="browser-frame" style={{ width: 210, height: 240 }}>
+        <div className="browser-bar">
+          <div className="browser-dot" style={{ background: "#ff5f57" }} />
+          <div className="browser-dot" style={{ background: "#ffbd2e" }} />
+          <div className="browser-dot" style={{ background: "#28c840" }} />
+          <div className="browser-url" />
+          {/* Toolbar badge */}
+          <div style={{ marginLeft: 4, width: 14, height: 14, borderRadius: 2, background: enabled ? "#c8f060" : "#3d3d3b", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Syne', sans-serif", fontSize: 5, fontWeight: 700, color: enabled ? "#080808" : "#7a7a78", transition: "background 0.4s, color 0.4s", flexShrink: 0 }}>
+            {enabled ? "ON" : "OFF"}
+          </div>
+        </div>
+        <div style={{ flex: 1, background: "#fff", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+          {/* Google search bar */}
+          <div style={{ padding: "6px 8px", borderBottom: "1px solid #edeff1", display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
+            <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 9, fontWeight: 800, color: "#4285f4" }}>G</div>
+            <div style={{ flex: 1, height: 10, background: "#f1f3f4", borderRadius: 10 }} />
+          </div>
+  
+          {/* AI Overview block — only shown when disabled */}
+          <div style={{
+            margin: "5px 8px", background: "#f0f4ff", border: "1px solid #c5d3ff",
+            borderRadius: 3, padding: "5px 6px", overflow: "hidden",
+            maxHeight: enabled ? 0 : 52, marginTop: enabled ? 0 : 5,
+            opacity: enabled ? 0 : 1,
+            transition: "max-height 0.5s ease, opacity 0.5s, margin 0.5s",
+          }}>
+            <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 7, fontWeight: 700, color: "#1a73e8", marginBottom: 3 }}>✦ AI Overview</div>
+            {[80, 95, 70].map((w, i) => (
+              <div key={i} style={{ height: 4, background: "#c5d3ff", borderRadius: 2, marginBottom: 2, width: `${w}%` }} />
+            ))}
+          </div>
+  
+          {/* Search results */}
+          <div style={{ flex: 1, padding: "4px 8px", display: "flex", flexDirection: "column", gap: 6 }}>
+            {[
+              { title: "Stack Overflow — answers", url: "stackoverflow.com", w: 85 },
+              { title: "MDN Web Docs", url: "developer.mozilla.org", w: 70 },
+              { title: "GitHub — srijanreddy", url: "github.com", w: 90 },
+            ].map((r, i) => (
+              <div key={i} style={{
+                opacity: enabled ? 1 : 0.4,
+                transform: enabled ? "translateY(0)" : "translateY(4px)",
+                transition: `opacity 0.4s ${i * 0.1}s, transform 0.4s ${i * 0.1}s`,
+              }}>
+                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 6, color: "#202124", marginBottom: 1 }}>{r.title}</div>
+                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 5.5, color: "#1a73e8" }}>{r.url}</div>
+                <div style={{ height: 3, background: "#f1f3f4", borderRadius: 2, marginTop: 2, width: `${r.w}%` }} />
+              </div>
+            ))}
+          </div>
+  
+          {/* Extension popup strip */}
+          <div style={{ borderTop: "1px solid #edeff1", padding: "5px 8px", display: "flex", alignItems: "center", justifyContent: "space-between", background: "#fafafa", flexShrink: 0 }}>
+            <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 6, color: "#878a8c" }}>{counter} redirects</div>
+            <div style={{
+              width: 24, height: 12, borderRadius: 6,
+              background: enabled ? "#c8f060" : "#3d3d3b",
+              position: "relative", transition: "background 0.4s", cursor: "pointer",
+            }}>
+              <div style={{
+                position: "absolute", top: 2, width: 8, height: 8, borderRadius: "50%", background: "#fff",
+                left: enabled ? 14 : 2, transition: "left 0.4s",
+              }} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
 // ── ResumeMatch Mock ──────────────────────────────────────────
 function ResumeMatchMock() {
