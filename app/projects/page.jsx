@@ -192,7 +192,7 @@ const css = `
               }}>
                 <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 6, color: "#202124", marginBottom: 1 }}>{r.title}</div>
                 <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 5.5, color: "#1a73e8" }}>{r.url}</div>
-                <div style={{ height: 3, background: "#f1f3f4", borderRadius: 2, marginTop: 2, width: `${r.w}%` }} />
+                <div style={{ height: 3, background: "#f1f3f4", borderRadius: 2, marginTop: 2, width: r.w + "%" }} />
               </div>
             ))}
           </div>
