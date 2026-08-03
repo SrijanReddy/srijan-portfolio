@@ -237,7 +237,7 @@ function InklateMock() {
           <div className="browser-dot" style={{ background: "#28c840" }} />
           <div className="browser-url" />
           {/* Toolbar badge */}
-          <div style={{ marginLeft: 4, width: 14, height: 14, borderRadius: 2, background: enabled ? "#c8f060" : "#3d3d3b", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Syne', sans-serif", fontSize: 5, fontWeight: 700, color: enabled ? "#080808" : "#7a7a78", transition: "background 0.4s, color 0.4s", flexShrink: 0 }}>
+          <div style={{ marginLeft: 4, width: 14, height: 14, borderRadius: 2, background: enabled ? "#c8f060" : "#3d3d3b", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Syne', sans-serif", fontSize: 5, fontWeight: 700, color: enabled ? "#080808" : "#6b6250", transition: "background 0.4s, color 0.4s", flexShrink: 0 }}>
             {enabled ? "ON" : "OFF"}
           </div>
         </div>
