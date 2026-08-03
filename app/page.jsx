@@ -490,9 +490,9 @@ export default function Portfolio() {
 
           <div>
             {sent ? (
-              <div style={{ padding: "32px", background: "#0f0f0f", border: "1px solid #c8f060", borderRadius: 4, textAlign: "center" }}>
-                <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, fontWeight: 700, color: "#c8f060", marginBottom: 8 }}>Message sent ✓</div>
-                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: "#7a7a78" }}>I'll get back to you soon.</div>
+              <div style={{ padding: "32px", background: "#EAE3D2", border: "1px solid #c8f060", borderRadius: 4, textAlign: "center" }}>
+                <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, fontWeight: 700, color: "#D9622B", marginBottom: 8 }}>Message sent ✓</div>
+                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: "#6b6250" }}>I'll get back to you soon.</div>
               </div>
             ) : (
               <div>
@@ -519,12 +519,12 @@ export default function Portfolio() {
 
       {/* FOOTER */}
       <footer style={{ borderTop: "1px solid #1f1f1f", padding: "28px 48px", display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: 900, margin: "0 auto" }}>
-        <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#3d3d3b" }}>© 2026 Srijan Reddy</span>
+        <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#8a7f66" }}>© 2026 Srijan Reddy</span>
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
           <a href={`mailto:${data.email}`} className="icon-btn"><IconEmail /></a>
           <a href={data.linkedin} target="_blank" rel="noreferrer" className="icon-btn"><IconLinkedIn /></a>
-          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#3d3d3b", marginLeft: 4 }}>
-            Built with <span style={{ color: "#c8f060" }}>React</span> · <span style={{ color: "#c8f060" }}>Vercel</span>
+          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#8a7f66", marginLeft: 4 }}>
+            Built with <span style={{ color: "#D9622B" }}>React</span> · <span style={{ color: "#D9622B" }}>Vercel</span>
           </span>
         </div>
       </footer>
