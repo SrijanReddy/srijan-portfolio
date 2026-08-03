@@ -154,6 +154,20 @@ const css = `
   .exp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
   .exp-tag { display: inline-block; padding: 4px 10px; background: #161616; border: 1px solid #1f1f1f; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 11px; color: #7a7a78; transition: border-color 0.2s, color 0.2s; cursor: default; }
   .exp-tag:hover { border-color: #c8f060; color: #c8f060; }
+  .hero-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px; align-items: center; margin-top: 24px; }
+  .reading-card { background: #EAE3D2; border: 1px solid #ddd6c4; border-radius: 4px; padding: 16px; }
+  .reading-label { font-family: 'Space Mono', monospace; font-size: 9px; color: #6b6250; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .reading-row { display: flex; gap: 10px; align-items: center; }
+  .reading-cover { width: 32px; height: 44px; object-fit: cover; border-radius: 2px; background: #ddd6c4; flex-shrink: 0; }
+  .reading-title { font-family: 'Fraunces', serif; font-style: italic; font-size: 13px; color: #241f16; }
+  .reading-author { font-family: 'Space Mono', monospace; font-size: 10px; color: #6b6250; margin-top: 2px; }
+  .timeline { position: relative; padding-left: 22px; }
+  .timeline-line { position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: #ddd6c4; }
+  .timeline-item { position: relative; margin-bottom: 32px; }
+  .timeline-dot { position: absolute; left: -22px; top: 4px; width: 9px; height: 9px; border-radius: 50%; background: #6b6250; }
+  .timeline-dot.active { background: #D9622B; }
+  .wip-note { margin-top: 10px; border: 1px dashed #c9bfa5; border-radius: 4px; padding: 12px; font-family: 'Space Mono', monospace; font-size: 10px; color: #6b6250; }
+  @media (max-width: 640px) { .hero-grid { grid-template-columns: 1fr; } }
 
   .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1px; background: #1f1f1f; border: 1px solid #1f1f1f; border-radius: 4px; overflow: hidden; }
   .skill-group { background: #080808; padding: 24px; transition: background 0.2s; }
