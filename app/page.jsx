@@ -10,7 +10,7 @@ const data = {
   summary: "Software Engineer with 4+ years of experience building and scaling high-availability distributed systems at Amazon and GEICO. Strong expertise in Java, Node.js, .NET, and cloud platforms (AWS, Azure), with a focus on microservices, API design, and system reliability. Proven track record of improving performance, reducing latency, and delivering impactful customer-facing features in large-scale production systems.",
   experience: [
     {
-    role: "Software Development Engineer",
+    role: "Software Development Engineer II",
     company: "Expedia Group",
     location: "Seattle, WA",
     period: "Joining Soon",
