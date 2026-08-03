@@ -47,6 +47,8 @@ const data = {
       tags: ["Java", "Node.js", "AWS", "Microservices", "CI/CD", "DynamoDB"],
     },
   ],
+currentlyReading: 
+  { title: "One Piece, Vol. 1: Romance Dawn", author: "Eiichiro Oda", isbn: "9781569319017" }
 skills: [
   {
     group: "Languages",
