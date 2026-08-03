@@ -382,57 +382,54 @@ export default function Portfolio() {
 
       {/* HERO */}
       <div id="about" className="hero">
-        <div className="hero-glow" />
-        <div className="hero-eyebrow">Available for new opportunities</div>
-        <h1 className="hero-title">
-          Srijan Reddy
-          <span className="hero-title-italic">Software Engineer.</span>
-        </h1>
-        <p className="hero-summary">{data.summary}</p>
-        <div className="hero-actions">
-          <button className="btn-primary" onClick={() => scrollTo("contact")}>Get in Touch →</button>
-          <button className="btn-secondary" onClick={() => scrollTo("experience")}>View Experience</button>
+      <div className="hero-eyebrow">Available for new opportunities</div>
+      <div className="hero-grid">
+        <div>
+          <h1 className="hero-title">Srijan Reddy<span className="hero-title-italic">Software Engineer.</span></h1>
+          <p className="hero-summary">{data.summary}</p>
+          <div className="hero-actions">
+            <button className="btn-primary" onClick={() => scrollTo("contact")}>Get in Touch →</button>
+            <button className="btn-secondary" onClick={() => scrollTo("experience")}>View Experience</button>
+          </div>
         </div>
-        <div className="hero-meta">
-          <div className="hero-meta-item"><IconPin /><span>{data.location}</span></div>
-          <div className="hero-meta-item"><IconBriefcase /><span>Amazon SDE</span></div>
-          <div className="hero-meta-item"><IconClock /><span>3+ Years Exp</span></div>
+        <div className="reading-card">
+          <div className="reading-label">Currently Reading</div>
+          <div className="reading-row">
+            <img className="reading-cover" src={`https://covers.openlibrary.org/b/isbn/${data.currentlyReading.isbn}-M.jpg`} alt={data.currentlyReading.title} onError={(e) => e.target.style.display = "none"} />
+            <div>
+              <div className="reading-title">{data.currentlyReading.title}</div>
+              <div className="reading-author">{data.currentlyReading.author}</div>
+            </div>
+          </div>
         </div>
-        <div className="hero-line" />
       </div>
+      <div className="hero-meta">
+        <div className="hero-meta-item"><IconPin /><span>{data.location}</span></div>
+        <div className="hero-meta-item"><IconBriefcase /><span>Expedia SDE II</span></div>
+      </div>
+    </div>
 
       {/* EXPERIENCE */}
       <div id="experience" className="section">
-        <SectionLabel num="01" label="Experience" />
-        <div ref={expRef} className="reveal">
-          {data.experience.map((exp, i) => (
-            <div key={i} className="exp-card">
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                <div>
-                  <div className="exp-period">{exp.period}</div>
-                  <div className="exp-role">{exp.role}</div>
-                  <div className="exp-company">{exp.company} · {exp.location}</div>
-                </div>
-                <a href={data.linkedin} target="_blank" rel="noreferrer" style={{ ...iconBox, color: "#7a7a78", fontSize: 14, textDecoration: "none" }}>↗</a>
-              </div>
-              <div className="exp-divider" />
-              {exp.wip ? (
-                <WipBuild />
-              ) : (
-                <div className="exp-bullets">
-                  {exp.bullets.map((b, j) => <div key={j} className="exp-bullet">{b}</div>)}
-                </div>
-              )}
-              {exp.tags.length > 0 && (
-                <div className="exp-tags">
-                  {exp.tags.map(t => <span key={t} className="exp-tag">{t}</span>)}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+      <SectionLabel num="01" label="Experience" />
+      <div ref={expRef} className="reveal timeline">
+        <div className="timeline-line" />
+        {data.experience.map((exp, i) => (
+          <div key={i} className="timeline-item">
+            <div className={`timeline-dot ${i === 0 ? "active" : ""}`} />
+            <div className="exp-period">{exp.period}</div>
+            <div className="exp-role">{exp.role}</div>
+            <div className="exp-company">{exp.company} · {exp.location}</div>
+            {exp.wip ? (
+              <div className="wip-note">Details incoming_</div>
+            ) : (
+              <div className="exp-bullets">{exp.bullets.map((b, j) => <div key={j} className="exp-bullet">{b}</div>)}</div>
+            )}
+            {exp.tags.length > 0 && <div className="exp-tags">{exp.tags.map(t => <span key={t} className="exp-tag">{t}</span>)}</div>}
+          </div>
+        ))}
       </div>
-
+    </div>
       {/* SKILLS */}
       <div id="skills" className="section" style={{ paddingTop: 0 }}>
         <SectionLabel num="02" label="Skills" />
