@@ -7,6 +7,7 @@ const data = {
   location: "Seattle, WA",
   email: "srijanreddy309@gmail.com",
   linkedin: "https://www.linkedin.com/in/srijanreddy/",
+  currentlyReading: { title: "One Piece, Vol. 1: Romance Dawn", author: "Eiichiro Oda", isbn: "9781569319017" },
   summary: "Software Engineer with 4+ years of experience building and scaling high-availability distributed systems at Amazon and GEICO. Strong expertise in Java, Node.js, .NET, and cloud platforms (AWS, Azure), with a focus on microservices, API design, and system reliability. Proven track record of improving performance, reducing latency, and delivering impactful customer-facing features in large-scale production systems.",
   experience: [
     {
@@ -47,8 +48,6 @@ const data = {
       tags: ["Java", "Node.js", "AWS", "Microservices", "CI/CD", "DynamoDB"],
     },
   ],
-currentlyReading: 
-  { title: "One Piece, Vol. 1: Romance Dawn", author: "Eiichiro Oda", isbn: "9781569319017" }
 skills: [
   {
     group: "Languages",
