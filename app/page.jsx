@@ -7,7 +7,6 @@ const data = {
   location: "Seattle, WA",
   email: "srijanreddy309@gmail.com",
   linkedin: "https://www.linkedin.com/in/srijanreddy/",
-  currentlyReading: { title: "One Piece, Vol. 1: Romance Dawn", author: "Eiichiro Oda", isbn: "9781569319017" },
   summary: "Software Engineer with 4+ years of experience building and scaling high-availability distributed systems at Amazon and GEICO. Strong expertise in Java, Node.js, .NET, and cloud platforms (AWS, Azure), with a focus on microservices, API design, and system reliability. Proven track record of improving performance, reducing latency, and delivering impactful customer-facing features in large-scale production systems.",
   experience: [
     {
@@ -22,7 +21,7 @@ const data = {
       role: "Engineer II",
       company: "GEICO",
       location: "Chevy Chase, MD (Remote)",
-      period: "Apr 2026 — Present",
+      period: "Apr 2026 — Jul 2026",
       bullets: [
         "Maintaining and enhancing enterprise-scale insurance applications using .NET, Azure, Flutter, and Dart",
         "Resolved high-severity production incidents and improved system stability across insurance data services",
@@ -36,7 +35,7 @@ const data = {
       role: "Software Development Engineer",
       company: "Amazon",
       location: "Seattle, WA",
-      period: "Jul 2022 — Present",
+      period: "Jul 2022 — Apr 2026",
       bullets: [
         "Building high-availability Java applications supporting 10+ global marketplaces and millions of users",
         "Reduced product return rates by 20% through UX-focused infrastructure improvements on Detail Page",
@@ -77,7 +76,7 @@ skills: [
 };
 
 const css = `
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,400&family=Space+Mono:wght@400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body { background: #080808; color: #f0ede6; font-family: 'DM Mono', monospace; cursor: none; }
@@ -154,20 +153,6 @@ const css = `
   .exp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
   .exp-tag { display: inline-block; padding: 4px 10px; background: #161616; border: 1px solid #1f1f1f; border-radius: 2px; font-family: 'DM Mono', monospace; font-size: 11px; color: #7a7a78; transition: border-color 0.2s, color 0.2s; cursor: default; }
   .exp-tag:hover { border-color: #c8f060; color: #c8f060; }
-  .hero-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px; align-items: center; margin-top: 24px; }
-  .reading-card { background: #EAE3D2; border: 1px solid #ddd6c4; border-radius: 4px; padding: 16px; }
-  .reading-label { font-family: 'Space Mono', monospace; font-size: 9px; color: #6b6250; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
-  .reading-row { display: flex; gap: 10px; align-items: center; }
-  .reading-cover { width: 32px; height: 44px; object-fit: cover; border-radius: 2px; background: #ddd6c4; flex-shrink: 0; }
-  .reading-title { font-family: 'Fraunces', serif; font-style: italic; font-size: 13px; color: #241f16; }
-  .reading-author { font-family: 'Space Mono', monospace; font-size: 10px; color: #6b6250; margin-top: 2px; }
-  .timeline { position: relative; padding-left: 22px; }
-  .timeline-line { position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: #ddd6c4; }
-  .timeline-item { position: relative; margin-bottom: 32px; }
-  .timeline-dot { position: absolute; left: -22px; top: 4px; width: 9px; height: 9px; border-radius: 50%; background: #6b6250; }
-  .timeline-dot.active { background: #D9622B; }
-  .wip-note { margin-top: 10px; border: 1px dashed #c9bfa5; border-radius: 4px; padding: 12px; font-family: 'Space Mono', monospace; font-size: 10px; color: #6b6250; }
-  @media (max-width: 640px) { .hero-grid { grid-template-columns: 1fr; } }
 
   .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1px; background: #1f1f1f; border: 1px solid #1f1f1f; border-radius: 4px; overflow: hidden; }
   .skill-group { background: #080808; padding: 24px; transition: background 0.2s; }
@@ -242,6 +227,41 @@ const css = `
 .wip-truck { position: absolute; top: 0; font-size: 20px; transition: left 0.04s linear; transform: translateX(-50%); }
 .wip-text { font-family: 'DM Mono', monospace; font-size: 11px; color: #7a7a78; letter-spacing: 0.05em; z-index: 1; }
 .wip-cursor { color: #c8f060; animation: pulse-dot 1s step-end infinite; }
+.wip-airport { position: relative; height: 240px; background: #0a0a0a; border: 1px dashed #2a2a2a; border-radius: 4px; overflow: hidden; transition: opacity 0.4s ease; }
+.wip-airport.wip-scene-reset { opacity: 0; }
+.wip-sky { position: absolute; inset: 0; }
+.wip-cloud { position: absolute; left: 0; animation: wip-drift linear infinite; }
+.wip-cloud-1 { top: 30px; animation-duration: 26s; }
+.wip-cloud-2 { top: 64px; animation-duration: 38s; animation-delay: -14s; }
+.wip-cloud-3 { top: 14px; animation-duration: 50s; animation-delay: -32s; }
+@keyframes wip-drift { from { transform: translateX(-70px); } to { transform: translateX(640px); } }
+.wip-board { position: absolute; top: 12px; left: 12px; z-index: 6; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #c8f060; background: #0f0f0f; border: 1px solid #1f1f1f; border-radius: 2px; padding: 6px 10px; perspective: 160px; }
+.wip-board span { display: inline-block; transform-origin: 50% 0%; animation: wip-flip 0.5s cubic-bezier(0.2, 0.7, 0.3, 1); }
+@keyframes wip-flip { 0% { transform: rotateX(-88deg); opacity: 0; } 55% { opacity: 1; } 100% { transform: rotateX(0deg); opacity: 1; } }
+.wip-alt { position: absolute; top: 15px; right: 12px; z-index: 6; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #7a7a78; font-variant-numeric: tabular-nums; }
+.wip-skyline { position: absolute; left: 0; right: 0; bottom: 30px; height: 130px; opacity: 0; transition: opacity 0.9s ease; pointer-events: none; }
+.wip-skyline.on { opacity: 1; }
+.wip-skyline svg { display: block; width: 100%; height: 100%; }
+.wip-plane { position: absolute; left: 8%; bottom: 40px; z-index: 5; }
+.wip-plane svg { display: block; transition: transform 1.1s ease-in-out; }
+.wip-plane-taxi { animation: wip-taxi 1.8s linear forwards; }
+@keyframes wip-taxi { from { left: 8%; } to { left: 38%; } }
+.wip-plane-takeoff { animation: wip-takeoff 1.6s ease-in forwards; }
+.wip-plane-takeoff svg { transform: rotate(-28deg); }
+@keyframes wip-takeoff { from { left: 38%; bottom: 40px; } to { left: 92%; bottom: 200px; } }
+.wip-plane-gone { left: 92%; bottom: 200px; opacity: 0; }
+.wip-plane-descend { animation: wip-descend 1.6s ease-out forwards; }
+.wip-plane-descend svg { transform: rotate(10deg); }
+@keyframes wip-descend { from { left: 108%; bottom: 215px; opacity: 0; } 20% { opacity: 1; } to { left: 64%; bottom: 40px; opacity: 1; } }
+.wip-plane-landing { animation: wip-landing 1.2s ease-out forwards; }
+@keyframes wip-landing { from { left: 64%; bottom: 40px; } to { left: 44%; bottom: 40px; } }
+.wip-plane-landed { left: 44%; bottom: 40px; }
+.wip-plane-reset { opacity: 0; }
+.wip-runway { position: absolute; left: 0; right: 0; bottom: 30px; height: 3px; background: #262626; }
+.wip-runway-lines { position: absolute; left: 0; right: 0; bottom: 30px; height: 3px; background: repeating-linear-gradient(90deg, #c8f060 0 14px, transparent 14px 30px); opacity: 0.3; }
+.wip-runway-lines.streaming { animation: wip-stream 0.45s linear infinite; }
+@keyframes wip-stream { from { background-position-x: 0; } to { background-position-x: -30px; } }
+.wip-caption { position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.05em; color: #7a7a78; }
 `;
 
 const IconPin = () => (
@@ -273,26 +293,76 @@ const IconLinkedIn = () => (
 
 function WipBuild() {
   const [phase, setPhase] = useState("taxi");
+  const [alt, setAlt] = useState(0);
+  const altRef = useRef(0);
+
   useEffect(() => {
-    const seq = [["taxi", 1800], ["takeoff", 1600], ["gone", 1000]];
+    const seq = [["taxi", 1800], ["takeoff", 1600], ["gone", 1000], ["descend", 1600], ["landing", 1200], ["landed", 2500], ["reset", 500]];
     let i = 0;
+    let t;
     const run = () => {
       setPhase(seq[i][0]);
-      setTimeout(() => { i = (i + 1) % seq.length; run(); }, seq[i][1]);
+      t = setTimeout(() => { i = (i + 1) % seq.length; run(); }, seq[i][1]);
     };
     run();
+    return () => clearTimeout(t);
   }, []);
 
+  useEffect(() => {
+    const target = phase === "takeoff" || phase === "gone" ? 35000 : 0;
+    let raf;
+    const tick = () => {
+      const v = altRef.current;
+      const next = v + (target - v) * 0.07;
+      if (Math.abs(target - next) < 2) { altRef.current = target; setAlt(target); return; }
+      altRef.current = next;
+      setAlt(Math.round(next));
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [phase]);
+
+  const board =
+    phase === "taxi" || phase === "takeoff" ? "SEA → EXPEDIA · BOARDING" :
+    phase === "landing" || phase === "landed" || phase === "reset" ? "EXPEDIA → SEA · ARRIVED" :
+    "EXPEDIA → SEA · LANDING";
+  const skylineOn = phase === "descend" || phase === "landing" || phase === "landed";
+  const streaming = phase === "taxi" || phase === "takeoff";
+
   return (
-    <div className="wip-airport">
-      <div className="wip-sky" />
+    <div className={`wip-airport${phase === "reset" ? " wip-scene-reset" : ""}`}>
+      <div className="wip-sky">
+        <svg className="wip-cloud wip-cloud-1" width="46" height="16" viewBox="0 0 46 16"><g fill="#1e1e1e"><ellipse cx="14" cy="11" rx="10" ry="5"/><ellipse cx="26" cy="8" rx="12" ry="6"/><ellipse cx="36" cy="11" rx="8" ry="4"/></g></svg>
+        <svg className="wip-cloud wip-cloud-2" width="34" height="12" viewBox="0 0 46 16"><g fill="#1e1e1e"><ellipse cx="14" cy="11" rx="10" ry="5"/><ellipse cx="26" cy="8" rx="12" ry="6"/><ellipse cx="36" cy="11" rx="8" ry="4"/></g></svg>
+        <svg className="wip-cloud wip-cloud-3" width="56" height="18" viewBox="0 0 46 16"><g fill="#181818"><ellipse cx="14" cy="11" rx="10" ry="5"/><ellipse cx="26" cy="8" rx="12" ry="6"/><ellipse cx="36" cy="11" rx="8" ry="4"/></g></svg>
+      </div>
+      <div className="wip-board" key={board}><span>{board}</span></div>
+      <div className="wip-alt">ALT {String(alt).padStart(5, "0")} FT</div>
+      <div className={`wip-skyline${skylineOn ? " on" : ""}`}>
+        <svg viewBox="0 0 520 120" preserveAspectRatio="xMidYMax meet">
+          <path d="M40 120 L195 28 L350 120 Z" fill="#111111" stroke="#2e2e2e" strokeWidth="1.5"/>
+          <path d="M168 44 L195 28 L222 44 L208 52 L182 52 Z" fill="#2e2e2e"/>
+          <rect x="320" y="62" width="34" height="58" fill="#0d0d0d" stroke="#2e2e2e"/>
+          <rect x="362" y="44" width="30" height="76" fill="#0d0d0d" stroke="#2e2e2e"/>
+          <rect x="400" y="70" width="40" height="50" fill="#0d0d0d" stroke="#2e2e2e"/>
+          <rect x="448" y="56" width="28" height="64" fill="#0d0d0d" stroke="#2e2e2e"/>
+          <g stroke="#3d3d3d" strokeWidth="2" fill="none">
+            <line x1="250" y1="120" x2="250" y2="52"/>
+            <line x1="242" y1="120" x2="248" y2="80"/>
+            <line x1="258" y1="120" x2="252" y2="80"/>
+            <ellipse cx="250" cy="46" rx="24" ry="7" fill="#0d0d0d"/>
+            <line x1="250" y1="39" x2="250" y2="26"/>
+          </g>
+        </svg>
+      </div>
       <div className={`wip-plane wip-plane-${phase}`}>
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8f060" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 2 L14 9 L21 12 L14 13 L13 20 L16 22 L12 20.5 L8 22 L11 20 L10 13 L3 12 L10 9 Z" fill="#c8f060" stroke="none" />
         </svg>
       </div>
       <div className="wip-runway" />
-      <div className="wip-runway-lines" />
+      <div className={`wip-runway-lines${streaming ? " streaming" : ""}`} />
       <div className="wip-caption">Joining Expedia — details taking off soon</div>
     </div>
   );
@@ -396,54 +466,57 @@ export default function Portfolio() {
 
       {/* HERO */}
       <div id="about" className="hero">
-        {/* <div className="hero-eyebrow">Available for new opportunities</div> */}
-      <div className="hero-grid">
-        <div>
-          <h1 className="hero-title">Srijan Reddy<span className="hero-title-italic">Software Engineer.</span></h1>
-          <p className="hero-summary">{data.summary}</p>
-          <div className="hero-actions">
-            <button className="btn-primary" onClick={() => scrollTo("contact")}>Get in Touch →</button>
-            <button className="btn-secondary" onClick={() => scrollTo("experience")}>View Experience</button>
-          </div>
+        <div className="hero-glow" />
+        {/* N/A <div className="hero-eyebrow">Available for new opportunities</div> */}
+        <h1 className="hero-title">
+          Srijan Reddy
+          <span className="hero-title-italic">Software Engineer.</span>
+        </h1>
+        <p className="hero-summary">{data.summary}</p>
+        <div className="hero-actions">
+          <button className="btn-primary" onClick={() => scrollTo("contact")}>Get in Touch →</button>
+          <button className="btn-secondary" onClick={() => scrollTo("experience")}>View Experience</button>
         </div>
-        <div className="reading-card">
-          <div className="reading-label">Currently Reading</div>
-          <div className="reading-row">
-            <img className="reading-cover" src={`https://covers.openlibrary.org/b/isbn/${data.currentlyReading.isbn}-M.jpg`} alt={data.currentlyReading.title} onError={(e) => e.target.style.display = "none"} />
-            <div>
-              <div className="reading-title">{data.currentlyReading.title}</div>
-              <div className="reading-author">{data.currentlyReading.author}</div>
-            </div>
-          </div>
+        <div className="hero-meta">
+          <div className="hero-meta-item"><IconPin /><span>{data.location}</span></div>
+          <div className="hero-meta-item"><IconBriefcase /><span>Expedia SDE</span></div>
+          <div className="hero-meta-item"><IconClock /><span>4+ Years Exp</span></div>
         </div>
+        <div className="hero-line" />
       </div>
-      <div className="hero-meta">
-        <div className="hero-meta-item"><IconPin /><span>{data.location}</span></div>
-        <div className="hero-meta-item"><IconBriefcase /><span>Expedia SDE II</span></div>
-      </div>
-    </div>
 
       {/* EXPERIENCE */}
       <div id="experience" className="section">
-      <SectionLabel num="01" label="Experience" />
-      <div ref={expRef} className="reveal timeline">
-        <div className="timeline-line" />
-        {data.experience.map((exp, i) => (
-          <div key={i} className="timeline-item">
-            <div className={`timeline-dot ${i === 0 ? "active" : ""}`} />
-            <div className="exp-period">{exp.period}</div>
-            <div className="exp-role">{exp.role}</div>
-            <div className="exp-company">{exp.company} · {exp.location}</div>
-            {exp.wip ? (
-              <div className="wip-note">Details incoming_</div>
-            ) : (
-              <div className="exp-bullets">{exp.bullets.map((b, j) => <div key={j} className="exp-bullet">{b}</div>)}</div>
-            )}
-            {exp.tags.length > 0 && <div className="exp-tags">{exp.tags.map(t => <span key={t} className="exp-tag">{t}</span>)}</div>}
-          </div>
-        ))}
+        <SectionLabel num="01" label="Experience" />
+        <div ref={expRef} className="reveal">
+          {data.experience.map((exp, i) => (
+            <div key={i} className="exp-card">
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                <div>
+                  <div className="exp-period">{exp.period}</div>
+                  <div className="exp-role">{exp.role}</div>
+                  <div className="exp-company">{exp.company} · {exp.location}</div>
+                </div>
+                <a href={data.linkedin} target="_blank" rel="noreferrer" style={{ ...iconBox, color: "#7a7a78", fontSize: 14, textDecoration: "none" }}>↗</a>
+              </div>
+              <div className="exp-divider" />
+              {exp.wip ? (
+                <WipBuild />
+              ) : (
+                <div className="exp-bullets">
+                  {exp.bullets.map((b, j) => <div key={j} className="exp-bullet">{b}</div>)}
+                </div>
+              )}
+              {exp.tags.length > 0 && (
+                <div className="exp-tags">
+                  {exp.tags.map(t => <span key={t} className="exp-tag">{t}</span>)}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+
       {/* SKILLS */}
       <div id="skills" className="section" style={{ paddingTop: 0 }}>
         <SectionLabel num="02" label="Skills" />
@@ -490,9 +563,9 @@ export default function Portfolio() {
 
           <div>
             {sent ? (
-              <div style={{ padding: "32px", background: "#EAE3D2", border: "1px solid #c8f060", borderRadius: 4, textAlign: "center" }}>
-                <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, fontWeight: 700, color: "#D9622B", marginBottom: 8 }}>Message sent ✓</div>
-                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: "#6b6250" }}>I'll get back to you soon.</div>
+              <div style={{ padding: "32px", background: "#0f0f0f", border: "1px solid #c8f060", borderRadius: 4, textAlign: "center" }}>
+                <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 18, fontWeight: 700, color: "#c8f060", marginBottom: 8 }}>Message sent ✓</div>
+                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: "#7a7a78" }}>I'll get back to you soon.</div>
               </div>
             ) : (
               <div>
@@ -519,12 +592,12 @@ export default function Portfolio() {
 
       {/* FOOTER */}
       <footer style={{ borderTop: "1px solid #1f1f1f", padding: "28px 48px", display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: 900, margin: "0 auto" }}>
-        <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#8a7f66" }}>© 2026 Srijan Reddy</span>
+        <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#3d3d3b" }}>© 2026 Srijan Reddy</span>
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
           <a href={`mailto:${data.email}`} className="icon-btn"><IconEmail /></a>
           <a href={data.linkedin} target="_blank" rel="noreferrer" className="icon-btn"><IconLinkedIn /></a>
-          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#8a7f66", marginLeft: 4 }}>
-            Built with <span style={{ color: "#D9622B" }}>React</span> · <span style={{ color: "#D9622B" }}>Vercel</span>
+          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "#3d3d3b", marginLeft: 4 }}>
+            Built with <span style={{ color: "#c8f060" }}>React</span> · <span style={{ color: "#c8f060" }}>Vercel</span>
           </span>
         </div>
       </footer>
