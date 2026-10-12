@@ -235,9 +235,9 @@ const css = `
 .wip-cloud-2 { top: 64px; animation-duration: 38s; animation-delay: -14s; }
 .wip-cloud-3 { top: 14px; animation-duration: 50s; animation-delay: -32s; }
 @keyframes wip-drift { from { transform: translateX(-70px); } to { transform: translateX(640px); } }
-.wip-board { position: absolute; top: 12px; left: 12px; z-index: 6; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #c8f060; background: #0f0f0f; border: 1px solid #1f1f1f; border-radius: 2px; padding: 6px 10px; }
-.wip-board span { display: inline-block; animation: wip-flip 0.45s ease; }
-@keyframes wip-flip { from { transform: rotateX(90deg); opacity: 0; } to { transform: rotateX(0); opacity: 1; } }
+.wip-board { position: absolute; top: 12px; left: 12px; z-index: 6; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #c8f060; background: #0f0f0f; border: 1px solid #1f1f1f; border-radius: 2px; padding: 6px 10px; perspective: 160px; }
+.wip-board span { display: inline-block; transform-origin: 50% 0%; animation: wip-flip 0.5s cubic-bezier(0.2, 0.7, 0.3, 1); }
+@keyframes wip-flip { 0% { transform: rotateX(-88deg); opacity: 0; } 55% { opacity: 1; } 100% { transform: rotateX(0deg); opacity: 1; } }
 .wip-alt { position: absolute; top: 15px; right: 12px; z-index: 6; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #7a7a78; font-variant-numeric: tabular-nums; }
 .wip-skyline { position: absolute; left: 0; right: 0; bottom: 30px; height: 130px; opacity: 0; transition: opacity 0.9s ease; pointer-events: none; }
 .wip-skyline.on { opacity: 1; }
