@@ -227,6 +227,41 @@ const css = `
 .wip-truck { position: absolute; top: 0; font-size: 20px; transition: left 0.04s linear; transform: translateX(-50%); }
 .wip-text { font-family: 'DM Mono', monospace; font-size: 11px; color: #7a7a78; letter-spacing: 0.05em; z-index: 1; }
 .wip-cursor { color: #c8f060; animation: pulse-dot 1s step-end infinite; }
+.wip-airport { position: relative; height: 240px; background: #0a0a0a; border: 1px dashed #2a2a2a; border-radius: 4px; overflow: hidden; transition: opacity 0.4s ease; }
+.wip-airport.wip-scene-reset { opacity: 0; }
+.wip-sky { position: absolute; inset: 0; }
+.wip-cloud { position: absolute; left: 0; animation: wip-drift linear infinite; }
+.wip-cloud-1 { top: 30px; animation-duration: 26s; }
+.wip-cloud-2 { top: 64px; animation-duration: 38s; animation-delay: -14s; }
+.wip-cloud-3 { top: 14px; animation-duration: 50s; animation-delay: -32s; }
+@keyframes wip-drift { from { transform: translateX(-70px); } to { transform: translateX(640px); } }
+.wip-board { position: absolute; top: 12px; left: 12px; z-index: 6; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #c8f060; background: #0f0f0f; border: 1px solid #1f1f1f; border-radius: 2px; padding: 6px 10px; }
+.wip-board span { display: inline-block; animation: wip-flip 0.45s ease; }
+@keyframes wip-flip { from { transform: rotateX(90deg); opacity: 0; } to { transform: rotateX(0); opacity: 1; } }
+.wip-alt { position: absolute; top: 15px; right: 12px; z-index: 6; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: #7a7a78; font-variant-numeric: tabular-nums; }
+.wip-skyline { position: absolute; left: 0; right: 0; bottom: 30px; height: 130px; opacity: 0; transition: opacity 0.9s ease; pointer-events: none; }
+.wip-skyline.on { opacity: 1; }
+.wip-skyline svg { display: block; width: 100%; height: 100%; }
+.wip-plane { position: absolute; left: 8%; bottom: 40px; z-index: 5; }
+.wip-plane svg { display: block; transition: transform 1.1s ease-in-out; }
+.wip-plane-taxi { animation: wip-taxi 1.8s linear forwards; }
+@keyframes wip-taxi { from { left: 8%; } to { left: 38%; } }
+.wip-plane-takeoff { animation: wip-takeoff 1.6s ease-in forwards; }
+.wip-plane-takeoff svg { transform: rotate(-28deg); }
+@keyframes wip-takeoff { from { left: 38%; bottom: 40px; } to { left: 92%; bottom: 200px; } }
+.wip-plane-gone { left: 92%; bottom: 200px; opacity: 0; }
+.wip-plane-descend { animation: wip-descend 1.6s ease-out forwards; }
+.wip-plane-descend svg { transform: rotate(10deg); }
+@keyframes wip-descend { from { left: 108%; bottom: 215px; opacity: 0; } 20% { opacity: 1; } to { left: 64%; bottom: 40px; opacity: 1; } }
+.wip-plane-landing { animation: wip-landing 1.2s ease-out forwards; }
+@keyframes wip-landing { from { left: 64%; bottom: 40px; } to { left: 44%; bottom: 40px; } }
+.wip-plane-landed { left: 44%; bottom: 40px; }
+.wip-plane-reset { opacity: 0; }
+.wip-runway { position: absolute; left: 0; right: 0; bottom: 30px; height: 3px; background: #262626; }
+.wip-runway-lines { position: absolute; left: 0; right: 0; bottom: 30px; height: 3px; background: repeating-linear-gradient(90deg, #c8f060 0 14px, transparent 14px 30px); opacity: 0.3; }
+.wip-runway-lines.streaming { animation: wip-stream 0.45s linear infinite; }
+@keyframes wip-stream { from { background-position-x: 0; } to { background-position-x: -30px; } }
+.wip-caption { position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.05em; color: #7a7a78; }
 `;
 
 const IconPin = () => (
@@ -258,26 +293,76 @@ const IconLinkedIn = () => (
 
 function WipBuild() {
   const [phase, setPhase] = useState("taxi");
+  const [alt, setAlt] = useState(0);
+  const altRef = useRef(0);
+
   useEffect(() => {
-    const seq = [["taxi", 1800], ["takeoff", 1600], ["gone", 1000]];
+    const seq = [["taxi", 1800], ["takeoff", 1600], ["gone", 1000], ["descend", 1600], ["landing", 1200], ["landed", 2500], ["reset", 500]];
     let i = 0;
+    let t;
     const run = () => {
       setPhase(seq[i][0]);
-      setTimeout(() => { i = (i + 1) % seq.length; run(); }, seq[i][1]);
+      t = setTimeout(() => { i = (i + 1) % seq.length; run(); }, seq[i][1]);
     };
     run();
+    return () => clearTimeout(t);
   }, []);
 
+  useEffect(() => {
+    const target = phase === "takeoff" || phase === "gone" ? 35000 : 0;
+    let raf;
+    const tick = () => {
+      const v = altRef.current;
+      const next = v + (target - v) * 0.07;
+      if (Math.abs(target - next) < 2) { altRef.current = target; setAlt(target); return; }
+      altRef.current = next;
+      setAlt(Math.round(next));
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [phase]);
+
+  const board =
+    phase === "taxi" || phase === "takeoff" ? "SEA → EXPEDIA · BOARDING" :
+    phase === "landing" || phase === "landed" || phase === "reset" ? "EXPEDIA → SEA · ARRIVED" :
+    "EXPEDIA → SEA · LANDING";
+  const skylineOn = phase === "descend" || phase === "landing" || phase === "landed";
+  const streaming = phase === "taxi" || phase === "takeoff";
+
   return (
-    <div className="wip-airport">
-      <div className="wip-sky" />
+    <div className={`wip-airport${phase === "reset" ? " wip-scene-reset" : ""}`}>
+      <div className="wip-sky">
+        <svg className="wip-cloud wip-cloud-1" width="46" height="16" viewBox="0 0 46 16"><g fill="#1e1e1e"><ellipse cx="14" cy="11" rx="10" ry="5"/><ellipse cx="26" cy="8" rx="12" ry="6"/><ellipse cx="36" cy="11" rx="8" ry="4"/></g></svg>
+        <svg className="wip-cloud wip-cloud-2" width="34" height="12" viewBox="0 0 46 16"><g fill="#1e1e1e"><ellipse cx="14" cy="11" rx="10" ry="5"/><ellipse cx="26" cy="8" rx="12" ry="6"/><ellipse cx="36" cy="11" rx="8" ry="4"/></g></svg>
+        <svg className="wip-cloud wip-cloud-3" width="56" height="18" viewBox="0 0 46 16"><g fill="#181818"><ellipse cx="14" cy="11" rx="10" ry="5"/><ellipse cx="26" cy="8" rx="12" ry="6"/><ellipse cx="36" cy="11" rx="8" ry="4"/></g></svg>
+      </div>
+      <div className="wip-board" key={board}><span>{board}</span></div>
+      <div className="wip-alt">ALT {String(alt).padStart(5, "0")} FT</div>
+      <div className={`wip-skyline${skylineOn ? " on" : ""}`}>
+        <svg viewBox="0 0 520 120" preserveAspectRatio="xMidYMax meet">
+          <path d="M40 120 L195 28 L350 120 Z" fill="#111111" stroke="#2e2e2e" strokeWidth="1.5"/>
+          <path d="M168 44 L195 28 L222 44 L208 52 L182 52 Z" fill="#2e2e2e"/>
+          <rect x="320" y="62" width="34" height="58" fill="#0d0d0d" stroke="#2e2e2e"/>
+          <rect x="362" y="44" width="30" height="76" fill="#0d0d0d" stroke="#2e2e2e"/>
+          <rect x="400" y="70" width="40" height="50" fill="#0d0d0d" stroke="#2e2e2e"/>
+          <rect x="448" y="56" width="28" height="64" fill="#0d0d0d" stroke="#2e2e2e"/>
+          <g stroke="#3d3d3d" strokeWidth="2" fill="none">
+            <line x1="250" y1="120" x2="250" y2="52"/>
+            <line x1="242" y1="120" x2="248" y2="80"/>
+            <line x1="258" y1="120" x2="252" y2="80"/>
+            <ellipse cx="250" cy="46" rx="24" ry="7" fill="#0d0d0d"/>
+            <line x1="250" y1="39" x2="250" y2="26"/>
+          </g>
+        </svg>
+      </div>
       <div className={`wip-plane wip-plane-${phase}`}>
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8f060" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 2 L14 9 L21 12 L14 13 L13 20 L16 22 L12 20.5 L8 22 L11 20 L10 13 L3 12 L10 9 Z" fill="#c8f060" stroke="none" />
         </svg>
       </div>
       <div className="wip-runway" />
-      <div className="wip-runway-lines" />
+      <div className={`wip-runway-lines${streaming ? " streaming" : ""}`} />
       <div className="wip-caption">Joining Expedia — details taking off soon</div>
     </div>
   );
