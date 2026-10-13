@@ -12,6 +12,7 @@ const data = {
     {
     role: "Software Development Engineer II",
     company: "Expedia Group",
+    logo: "E",
     location: "Seattle, WA",
     period: "Joining Soon",
     wip: true, // flag to render the construction placeholder instead of bullets
@@ -20,6 +21,7 @@ const data = {
     {
       role: "Engineer II",
       company: "GEICO",
+      logo: "G",
       location: "Chevy Chase, MD (Remote)",
       period: "Apr 2026 — Jul 2026",
       bullets: [
@@ -34,6 +36,7 @@ const data = {
     {
       role: "Software Development Engineer",
       company: "Amazon",
+      logo: "a",
       location: "Seattle, WA",
       period: "Jul 2022 — Apr 2026",
       bullets: [
@@ -145,6 +148,7 @@ const css = `
   .exp-card:hover { border-color: #c8f060; transform: translateY(-2px); }
   .exp-period { font-family: 'DM Mono', monospace; font-size: 11px; color: #c8f060; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
   .exp-role { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: #f0ede6; }
+  .exp-logo { width: 42px; height: 42px; border-radius: 8px; background: #161616; border: 1px solid #2a2a2a; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; color: #c8f060; flex-shrink: 0; margin-top: 2px; }
   .exp-company { font-family: 'Syne', sans-serif; font-size: 14px; color: #7a7a78; margin-top: 3px; }
   .exp-divider { height: 1px; background: #1f1f1f; margin: 20px 0; }
   .exp-bullets { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 24px; }
@@ -202,7 +206,9 @@ const css = `
     .section { padding: 80px 24px; }
     .contact-grid { grid-template-columns: 1fr; }
     .exp-bullets { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
+    .nav-links { display: flex; gap: 20px; overflow-x: auto; scrollbar-width: none; padding: 0 4px; }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-link { font-size: 10px; white-space: nowrap; }
     .scroll-top { bottom: 20px; right: 20px; }
   }
   .wip-box {
@@ -492,10 +498,13 @@ export default function Portfolio() {
           {data.experience.map((exp, i) => (
             <div key={i} className="exp-card">
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                <div>
-                  <div className="exp-period">{exp.period}</div>
-                  <div className="exp-role">{exp.role}</div>
-                  <div className="exp-company">{exp.company} · {exp.location}</div>
+                <div style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                  <div className="exp-logo">{exp.logo}</div>
+                  <div>
+                    <div className="exp-period">{exp.period}</div>
+                    <div className="exp-role">{exp.role}</div>
+                    <div className="exp-company">{exp.company} · {exp.location}</div>
+                  </div>
                 </div>
                 <a href={data.linkedin} target="_blank" rel="noreferrer" style={{ ...iconBox, color: "#7a7a78", fontSize: 14, textDecoration: "none" }}>↗</a>
               </div>
